@@ -200,11 +200,12 @@ class ArchiveViewController: UITableViewController, UIGestureRecognizerDelegate 
         }
 
         let duration = timeRequiredToMove(from: snapshotMaskView.frame.minY, to: 0.0, withVelocity: velocity.y)
+        let clampedDuration = min(duration, 3.0)
 
         // When cancelling the transition we simply move the mask view to it's original
         // location (which means that the entire previous style snapshot is shown), then
         // reset the style to the previous style and remove the snapshot.
-        UIView.animateWithDuration(duration, animations: {
+        UIView.animateWithDuration(clampedDuration, animations: {
             snapshotMaskView.frame.origin.y = 0.0
         }, completion: { _ in
             self.useDarkMode = !self.useDarkMode
@@ -221,13 +222,14 @@ class ArchiveViewController: UITableViewController, UIGestureRecognizerDelegate 
 
         let targetLocation = window.bounds.maxY
         let duration = timeRequiredToMove(from: snapshotMaskView.frame.minY, to: targetLocation, withVelocity: velocity.y)
+        let clampedDuration = min(duration, 3.0)
 
         // When completing the transition we slide the mask view down to the bottom of
         // the window and then remove the snapshot. The further down the mask view is, 
         // the more of the underlying view is visible. When the mask view reaches the
         // bottom of the window, the entire underlying view will be visible so removing
         // the snapshot will have no visual effect.
-        UIView.animateWithDuration(duration, animations: {
+        UIView.animateWithDuration(clampedDuration, animations: {
             snapshotMaskView.frame.origin.y = targetLocation
         }, completion: { _ in
             self.cleanupAfterInteractiveStyleTransition()
