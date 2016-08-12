@@ -4,14 +4,14 @@ the Night Mode transition in [Castro 2](http://supertop.co/castro/). You can see
 a glimpse of the transition near the end of 
 [the trailer](http://supertop.co/castro/#trailer).
 
-#### Running the application
+### Running the application
 Simply open `NightModeTransition.xcodeproj` in Xcode and Build & Run the 
 application.  Swipe downwards with two fingers when running the application to 
 transition between the two available styles.
 
 ![The style transition in action](style_transition.gif)
 
-#### How the transition works
+### How the transition works
 The transition is implemented using snapshot views and masking views. When the
 transition begins, a snapshot of the current view is taken and placed on top of
 all other content. A masking view for the snapshot view is also created at this
@@ -28,7 +28,7 @@ and the user can interact with the application as usual.
 A more detailed write-up will be posted on [my blog](http://ndersson.me)
 shortly.
 
-#### Podcasts in the demo application
+### Podcasts in the demo application
 * [If I Were You](http://ifiwereyoushow.com)
 * [Radiolab](http://radiolab.org)
 * [Appodden](https://overcast.fm/itunes1005587579/appodden)
