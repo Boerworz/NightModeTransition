@@ -10,7 +10,7 @@
         <scene sceneID="XAC-8K-fjJ">
             <objects>
                 <tableViewController title="Archive" id="W9V-RI-4N0" customClass="ArchiveViewController" customModule="NightModeTransition" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" showsSelectionImmediatelyOnTouchBegin="NO" rowHeight="94" sectionHeaderHeight="18" sectionFooterHeight="18" id="WQY-Su-HVr">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" allowsSelection="NO" showsSelectionImmediatelyOnTouchBegin="NO" rowHeight="94" sectionHeaderHeight="18" sectionFooterHeight="18" id="WQY-Su-HVr">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
