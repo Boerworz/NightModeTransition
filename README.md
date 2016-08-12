@@ -9,6 +9,8 @@ Simply open `NightModeTransition.xcodeproj` in Xcode and Build & Run the
 application.  Swipe downwards with two fingers when running the application to 
 transition between the two available styles.
 
+![The style transition in action](style_transition.gif)
+
 #### How the transition works
 The transition is implemented using snapshot views and masking views. When the
 transition begins, a snapshot of the current view is taken and placed on top of
