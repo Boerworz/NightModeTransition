@@ -26,6 +26,12 @@ struct CellStyle {
 class ArchiveTableCellView: UITableViewCell {
 
     @IBOutlet private weak var label: UILabel?
+    @IBOutlet private weak var artworkImageView: UIImageView?
+
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        artworkImageView?.layer.cornerRadius = 10.0
+    }
 
     func apply(style style: CellStyle) {
         backgroundColor = style.backgroundColor

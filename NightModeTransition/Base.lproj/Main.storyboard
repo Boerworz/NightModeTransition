@@ -3,136 +3,184 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
     </dependencies>
     <scenes>
         <!--Archive-->
         <scene sceneID="XAC-8K-fjJ">
             <objects>
                 <tableViewController title="Archive" id="W9V-RI-4N0" customClass="ArchiveViewController" customModule="NightModeTransition" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" showsSelectionImmediatelyOnTouchBegin="NO" rowHeight="44" sectionHeaderHeight="18" sectionFooterHeight="18" id="WQY-Su-HVr">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" showsSelectionImmediatelyOnTouchBegin="NO" rowHeight="94" sectionHeaderHeight="18" sectionFooterHeight="18" id="WQY-Su-HVr">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
+                        <inset key="separatorInset" minX="20" minY="0.0" maxX="0.0" maxY="0.0"/>
                         <sections>
-                            <tableViewSection id="zKc-Nm-XTk">
-                                <cells>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="SettingsTableViewCell" id="8fs-u0-NTE" customClass="ArchiveTableCellView" customModule="NightModeTransition" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="99" width="600" height="44"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="8fs-u0-NTE" id="8Ns-kO-TXo">
-                                            <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Starred" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="O1j-JM-TZb">
-                                                    <rect key="frame" x="20" y="11" width="57" height="21"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                            </subviews>
-                                            <constraints>
-                                                <constraint firstItem="O1j-JM-TZb" firstAttribute="leading" secondItem="8Ns-kO-TXo" secondAttribute="leading" constant="20" id="nXr-Yn-tJr"/>
-                                                <constraint firstItem="O1j-JM-TZb" firstAttribute="centerY" secondItem="8Ns-kO-TXo" secondAttribute="centerY" id="p5A-1L-yEc"/>
-                                            </constraints>
-                                        </tableViewCellContentView>
-                                        <connections>
-                                            <outlet property="label" destination="O1j-JM-TZb" id="eJh-D3-Hkt"/>
-                                        </connections>
-                                    </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="SettingsTableViewCell" id="vqa-gb-d71" customClass="ArchiveTableCellView" customModule="NightModeTransition" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="143" width="600" height="44"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="vqa-gb-d71" id="DXw-Zq-AMq">
-                                            <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="History" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Npf-sx-oJc">
-                                                    <rect key="frame" x="20" y="11" width="55" height="21"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                            </subviews>
-                                            <constraints>
-                                                <constraint firstItem="Npf-sx-oJc" firstAttribute="centerY" secondItem="DXw-Zq-AMq" secondAttribute="centerY" id="Eh9-xo-yRr"/>
-                                                <constraint firstItem="Npf-sx-oJc" firstAttribute="leading" secondItem="DXw-Zq-AMq" secondAttribute="leading" constant="20" id="x8p-mb-doS"/>
-                                            </constraints>
-                                        </tableViewCellContentView>
-                                        <connections>
-                                            <outlet property="label" destination="Npf-sx-oJc" id="DB9-SY-d2S"/>
-                                        </connections>
-                                    </tableViewCell>
-                                </cells>
-                            </tableViewSection>
                             <tableViewSection id="ieB-ac-jAd">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="SettingsTableViewCell" id="XnP-wx-WmJ" customClass="ArchiveTableCellView" customModule="NightModeTransition" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="223" width="600" height="44"/>
+                                        <rect key="frame" x="0.0" y="99" width="600" height="94"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="XnP-wx-WmJ" id="9qe-bc-0Jh">
-                                            <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="93"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Radiolab" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="09m-ua-04E">
-                                                    <rect key="frame" x="20" y="11" width="67" height="21"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="If I Were You" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="09m-ua-04E">
+                                                    <rect key="frame" x="104" y="36" width="96" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ifiwereyou" translatesAutoresizingMaskIntoConstraints="NO" id="sbb-41-BZL">
+                                                    <rect key="frame" x="20" y="15" width="64" height="64"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="64" id="WW7-Rb-S4t"/>
+                                                        <constraint firstAttribute="width" secondItem="sbb-41-BZL" secondAttribute="height" multiplier="1:1" id="jmB-El-xdI"/>
+                                                    </constraints>
+                                                </imageView>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="09m-ua-04E" firstAttribute="centerY" secondItem="9qe-bc-0Jh" secondAttribute="centerY" id="1ds-sT-ZGB"/>
-                                                <constraint firstItem="09m-ua-04E" firstAttribute="leading" secondItem="9qe-bc-0Jh" secondAttribute="leading" constant="20" id="xGY-CL-hcH"/>
+                                                <constraint firstItem="09m-ua-04E" firstAttribute="leading" secondItem="sbb-41-BZL" secondAttribute="trailing" constant="20" id="c66-gP-HZs"/>
+                                                <constraint firstItem="sbb-41-BZL" firstAttribute="leading" secondItem="9qe-bc-0Jh" secondAttribute="leading" constant="20" id="rxJ-BG-nmf"/>
+                                                <constraint firstItem="sbb-41-BZL" firstAttribute="centerY" secondItem="9qe-bc-0Jh" secondAttribute="centerY" id="whM-XE-mcc"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
+                                            <outlet property="artworkImageView" destination="sbb-41-BZL" id="xva-Av-8Ad"/>
                                             <outlet property="label" destination="09m-ua-04E" id="m6n-Pn-G0b"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="SettingsTableViewCell" id="w6S-lR-gv1" customClass="ArchiveTableCellView" customModule="NightModeTransition" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="267" width="600" height="44"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="SettingsTableViewCell" id="X9j-2L-Hyl" customClass="ArchiveTableCellView" customModule="NightModeTransition" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="193" width="600" height="94"/>
                                         <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="w6S-lR-gv1" id="8BT-7b-mnY">
-                                            <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="X9j-2L-Hyl" id="P4I-b8-qRe">
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="93"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="If I Were You" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Nvr-9A-GSZ">
-                                                    <rect key="frame" x="20" y="11" width="96" height="21"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Radiolab" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3Px-j1-gXL">
+                                                    <rect key="frame" x="104" y="36" width="67" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="radiolab" translatesAutoresizingMaskIntoConstraints="NO" id="sj4-FY-kwP">
+                                                    <rect key="frame" x="20" y="15" width="64" height="64"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="64" id="oqA-8D-Rhc"/>
+                                                        <constraint firstAttribute="width" secondItem="sj4-FY-kwP" secondAttribute="height" multiplier="1:1" id="xKf-CR-VWE"/>
+                                                    </constraints>
+                                                </imageView>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="Nvr-9A-GSZ" firstAttribute="centerY" secondItem="8BT-7b-mnY" secondAttribute="centerY" id="G0e-xn-I2c"/>
-                                                <constraint firstItem="Nvr-9A-GSZ" firstAttribute="leading" secondItem="8BT-7b-mnY" secondAttribute="leading" constant="20" id="G2a-c3-EQN"/>
+                                                <constraint firstItem="3Px-j1-gXL" firstAttribute="centerY" secondItem="P4I-b8-qRe" secondAttribute="centerY" id="9ZL-3w-CY2"/>
+                                                <constraint firstItem="sj4-FY-kwP" firstAttribute="centerY" secondItem="P4I-b8-qRe" secondAttribute="centerY" id="Bnk-uR-ydX"/>
+                                                <constraint firstItem="3Px-j1-gXL" firstAttribute="leading" secondItem="sj4-FY-kwP" secondAttribute="trailing" constant="20" id="CGS-9a-eb1"/>
+                                                <constraint firstItem="sj4-FY-kwP" firstAttribute="leading" secondItem="P4I-b8-qRe" secondAttribute="leading" constant="20" id="amf-yF-dUz"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <outlet property="label" destination="Nvr-9A-GSZ" id="WB5-JR-mQJ"/>
+                                            <outlet property="artworkImageView" destination="sj4-FY-kwP" id="oeo-0M-u76"/>
+                                            <outlet property="label" destination="3Px-j1-gXL" id="ezv-ch-kX4"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="SettingsTableViewCell" id="heC-Z1-Q1P" customClass="ArchiveTableCellView" customModule="NightModeTransition" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="311" width="600" height="44"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="SettingsTableViewCell" id="Yxb-hd-ZS0" customClass="ArchiveTableCellView" customModule="NightModeTransition" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="287" width="600" height="94"/>
                                         <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="heC-Z1-Q1P" id="31N-3R-CdC">
-                                            <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Yxb-hd-ZS0" id="dbb-z0-mIB">
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="93"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Appodden" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kPs-t6-vrh">
-                                                    <rect key="frame" x="20" y="11" width="80" height="21"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Appodden" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kOJ-t4-PXh">
+                                                    <rect key="frame" x="104" y="36" width="80" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="appodden" translatesAutoresizingMaskIntoConstraints="NO" id="KCF-3e-ZnX">
+                                                    <rect key="frame" x="20" y="15" width="64" height="64"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="64" id="7G5-dq-nUK"/>
+                                                        <constraint firstAttribute="width" secondItem="KCF-3e-ZnX" secondAttribute="height" multiplier="1:1" id="DKx-Tx-579"/>
+                                                    </constraints>
+                                                </imageView>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="kPs-t6-vrh" firstAttribute="centerY" secondItem="31N-3R-CdC" secondAttribute="centerY" id="T5l-8k-1gU"/>
-                                                <constraint firstItem="kPs-t6-vrh" firstAttribute="leading" secondItem="31N-3R-CdC" secondAttribute="leading" constant="20" id="nYG-WI-iND"/>
+                                                <constraint firstItem="KCF-3e-ZnX" firstAttribute="centerY" secondItem="dbb-z0-mIB" secondAttribute="centerY" id="PLZ-3w-znt"/>
+                                                <constraint firstItem="kOJ-t4-PXh" firstAttribute="centerY" secondItem="dbb-z0-mIB" secondAttribute="centerY" id="fzh-gl-VQG"/>
+                                                <constraint firstItem="KCF-3e-ZnX" firstAttribute="leading" secondItem="dbb-z0-mIB" secondAttribute="leading" constant="20" id="h4P-z7-6jF"/>
+                                                <constraint firstItem="kOJ-t4-PXh" firstAttribute="leading" secondItem="KCF-3e-ZnX" secondAttribute="trailing" constant="20" id="ogb-MK-FQ2"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <outlet property="label" destination="kPs-t6-vrh" id="PBk-Vo-f8p"/>
+                                            <outlet property="artworkImageView" destination="KCF-3e-ZnX" id="HvU-vL-x4C"/>
+                                            <outlet property="label" destination="kOJ-t4-PXh" id="Rxf-3R-Y7U"/>
+                                        </connections>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="SettingsTableViewCell" id="CSF-bO-lmL" customClass="ArchiveTableCellView" customModule="NightModeTransition" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="381" width="600" height="94"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="CSF-bO-lmL" id="2is-hJ-ztQ">
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="93"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Love + Radio" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0zr-DT-CUg">
+                                                    <rect key="frame" x="104" y="36" width="99" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="loveandradio" translatesAutoresizingMaskIntoConstraints="NO" id="oRu-lC-vj2">
+                                                    <rect key="frame" x="20" y="15" width="64" height="64"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="64" id="OEh-fd-yZr"/>
+                                                        <constraint firstAttribute="width" secondItem="oRu-lC-vj2" secondAttribute="height" multiplier="1:1" id="SgM-2h-uAw"/>
+                                                    </constraints>
+                                                </imageView>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="0zr-DT-CUg" firstAttribute="leading" secondItem="oRu-lC-vj2" secondAttribute="trailing" constant="20" id="2JF-TS-hqq"/>
+                                                <constraint firstItem="oRu-lC-vj2" firstAttribute="centerY" secondItem="2is-hJ-ztQ" secondAttribute="centerY" id="Kji-Th-UIu"/>
+                                                <constraint firstItem="oRu-lC-vj2" firstAttribute="leading" secondItem="2is-hJ-ztQ" secondAttribute="leading" constant="20" id="XRh-kO-WMj"/>
+                                                <constraint firstItem="0zr-DT-CUg" firstAttribute="centerY" secondItem="2is-hJ-ztQ" secondAttribute="centerY" id="bLQ-qb-HFj"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="artworkImageView" destination="oRu-lC-vj2" id="hvb-YP-KJu"/>
+                                            <outlet property="label" destination="0zr-DT-CUg" id="o6m-vH-imU"/>
+                                        </connections>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="SettingsTableViewCell" id="bbB-VT-U2q" customClass="ArchiveTableCellView" customModule="NightModeTransition" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="475" width="600" height="94"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="bbB-VT-U2q" id="70N-QY-qiq">
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="93"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Top Four" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="38d-XQ-9zc">
+                                                    <rect key="frame" x="104" y="36" width="68" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="topfour" translatesAutoresizingMaskIntoConstraints="NO" id="LsU-gQ-8Pg">
+                                                    <rect key="frame" x="20" y="15" width="64" height="64"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="64" id="Axy-lm-cUf"/>
+                                                        <constraint firstAttribute="width" secondItem="LsU-gQ-8Pg" secondAttribute="height" multiplier="1:1" id="mhE-L4-BkW"/>
+                                                    </constraints>
+                                                </imageView>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="LsU-gQ-8Pg" firstAttribute="leading" secondItem="70N-QY-qiq" secondAttribute="leading" constant="20" id="0mV-n2-ZbR"/>
+                                                <constraint firstItem="LsU-gQ-8Pg" firstAttribute="centerY" secondItem="70N-QY-qiq" secondAttribute="centerY" id="9S4-LR-tD7"/>
+                                                <constraint firstItem="38d-XQ-9zc" firstAttribute="centerY" secondItem="70N-QY-qiq" secondAttribute="centerY" id="awq-x1-c02"/>
+                                                <constraint firstItem="38d-XQ-9zc" firstAttribute="leading" secondItem="LsU-gQ-8Pg" secondAttribute="trailing" constant="20" id="vIj-ah-1zi"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="artworkImageView" destination="LsU-gQ-8Pg" id="mlL-DY-S4P"/>
+                                            <outlet property="label" destination="38d-XQ-9zc" id="JuM-bD-2ND"/>
                                         </connections>
                                     </tableViewCell>
                                 </cells>
@@ -166,4 +214,11 @@
             <point key="canvasLocation" x="-89" y="626"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="appodden" width="64" height="64"/>
+        <image name="ifiwereyou" width="64" height="64"/>
+        <image name="loveandradio" width="64" height="64"/>
+        <image name="radiolab" width="64" height="64"/>
+        <image name="topfour" width="64" height="64"/>
+    </resources>
 </document>
