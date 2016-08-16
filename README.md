@@ -12,21 +12,32 @@ transition between the two available styles.
 ![The style transition in action](style_transition.gif)
 
 ### How the transition works
-The transition is implemented using snapshot views and masking views. When the
+The transition is implemented using a snapshot view and a mask layer. When the
 transition begins, a snapshot of the current view is taken and placed on top of
-all other content. A masking view for the snapshot view is also created at this
+all other content. A mask layer for the snapshot view is also created at this
 point, initially letting the entire snapshot be seen. When this is done, the
 actual view is updated to the new style.
 
-As the user pans and the transition progresses, the masking view is moved to
+As the user pans and the transition progresses, the mask layer is moved to
 let the user see the updated view behind the snapshot. When the panning ends
-the masking view is animated either to its initial position if the transition
+the mask layer is animated either to its initial position if the transition
 was cancelled, or to the bottom of the window if the transition was completed.
 When the animating completes, the snapshot is removed from the view hierarchy
 and the user can interact with the application as usual.
 
-A more detailed write-up will be posted on [my blog](http://ndersson.me)
-shortly.
+To achieve the bouncy effect of the transition, we use a `CAShapeLayer` as the
+mask and update the path of the layer as the transition progresses. The top of
+the mask is drawn using a quad curve 
+(`UIBezierPath.addQuadCurveToPoint(_:controlPoint:)`) where the vertical 
+position of the control point is based on the vertical velocity of the pan 
+gesture. The faster the user pans, the more pronounced the curve will be. Since
+the pan gesture recognizer calls its target selector periodically even when the 
+user stops dragging (but keeps their fingers on the screen) as long as the
+calculated velocity hasn't settled, we don't need to add any special code 
+to return the mask to its non-curved state.
+
+A more detailed write-up will hopefully be posted on 
+[my blog](http://ndersson.me) shortly.
 
 ### Podcasts in the demo application
 * [If I Were You](http://ifiwereyoushow.com)
