@@ -81,7 +81,7 @@ class ArchiveViewController: UITableViewController, UIGestureRecognizerDelegate 
         case .Began:
             beginInteractiveStyleTransition(withPanRecognizer: panRecognizer)
         case .Changed:
-            adjustMaskViewPosition(basedOn: panRecognizer)
+            adjustMaskLayer(basedOn: panRecognizer)
         case .Ended, .Failed:
             endInteractiveStyleTransition(withPanRecognizer: panRecognizer)
         default: break
@@ -110,11 +110,11 @@ class ArchiveViewController: UITableViewController, UIGestureRecognizerDelegate 
     /// with the new style.
     private var previousStyleViewSnapshot: UIView?
 
-    /// During the interactive transition, this property contains the view
+    /// During the interactive transition, this property contains the layer
     /// used to mask the contents of `previousStyleViewSnapshot`.
-    /// When the user pans, the frame of `snapshotMaskView` is adjusted to
-    /// reflect the current translation of the pan recognizer.
-    private var snapshotMaskView: UIView?
+    /// When the user pans, the position and path of `snapshotMaskLayer` is
+    /// adjusted to reflect the current translation of the pan recognizer.
+    private var snapshotMaskLayer: CAShapeLayer?
 
     private func beginInteractiveStyleTransition(withPanRecognizer panRecognizer: UIPanGestureRecognizer) {
         guard let window = tableView.window else {
@@ -127,47 +127,97 @@ class ArchiveViewController: UITableViewController, UIGestureRecognizerDelegate 
         window.addSubview(previousStyleViewSnapshot!)
         window.bringSubviewToFront(previousStyleViewSnapshot!)
 
-        // When we have the snapshot we create a new mask view that's used to
+        // When we have the snapshot we create a new mask layer that's used to
         // control how much of the previous view we display as the transition
         // progresses.
-        snapshotMaskView = UIView(frame: window.bounds)
-        snapshotMaskView?.backgroundColor = .blackColor()
-        previousStyleViewSnapshot?.maskView = snapshotMaskView
+        snapshotMaskLayer = CAShapeLayer()
+        snapshotMaskLayer?.path = UIBezierPath(rect: window.bounds).CGPath
+        snapshotMaskLayer?.fillColor = UIColor.blackColor().CGColor
+        previousStyleViewSnapshot?.layer.mask = snapshotMaskLayer
 
         // Now we're free to apply the new style. This won't be visible until
         // the user pans more since the snapshot is displayed on top of the
         // actual content.
         useDarkMode = !useDarkMode
 
-        // Finally we make our first adjustment to the mask view's position
-        // based on the values of the pan recognizer.
-        adjustMaskViewPosition(basedOn: panRecognizer)
+        // Finally we make our first adjustment to the mask layer based on the 
+        // values of the pan recognizer.
+        adjustMaskLayer(basedOn: panRecognizer)
     }
 
-    private func adjustMaskViewPosition(basedOn panRecognizer: UIPanGestureRecognizer) {
+    private func adjustMaskLayer(basedOn panRecognizer: UIPanGestureRecognizer) {
+        adjustMaskLayerPosition(basedOn: panRecognizer)
+        adjustMaskLayerPath(basedOn: panRecognizer)
+    }
+
+    private func adjustMaskLayerPosition(basedOn panRecognizer: UIPanGestureRecognizer) {
         guard let window = tableView.window else {
             return
         }
 
+        // We need to disable implicit animations since we don't want to
+        // animate the position change of the mask layer.
+        CATransaction.begin()
+        CATransaction.setDisableActions(true)
+
         let verticalTranslation = panRecognizer.translationInView(window).y
         if verticalTranslation < 0.0 {
-            // We wan't to prevent the user from moving the mask view out the
+            // We wan't to prevent the user from moving the mask layer out the
             // top of the window, since doing so would show the new style at
             // the bottom of the window instead.
             // By resetting the translation we make sure there's no visual 
             // delay between when the user tries to pan upwards and when they 
             // start panning downwards again.
             panRecognizer.setTranslation(.zero, inView: window)
-            snapshotMaskView?.frame.origin.y = 0.0
+            snapshotMaskLayer?.frame.origin.y = 0.0
         } else {
-            // Simply move the mask view as much as the user has panned.
+            // Simply move the mask layer as much as the user has panned.
             // Note that if we had used the _location_ of the pan recognizer
-            // instead of the translation, the top of the mask view would 
+            // instead of the translation, the top of the mask layer would
             // follow the fingers exactly. Using the translation results in a 
-            // better user experience since the location of the mask view is 
+            // better user experience since the location of the mask layer is
             // instead relative to the distance moved.
-            snapshotMaskView?.frame.origin.y = verticalTranslation
+            snapshotMaskLayer?.frame.origin.y = verticalTranslation
         }
+
+        CATransaction.commit()
+    }
+
+    private func adjustMaskLayerPath(basedOn panRecognizer: UIPanGestureRecognizer) {
+        guard let window = tableView.window else {
+            return
+        }
+
+        let maskingPath = UIBezierPath()
+
+        // Top-left corner...
+        maskingPath.moveToPoint(.zero)
+
+        // ...arc to top-right corner...
+        // This is all the code that is required to get the bouncy effect.
+        // Since the control point of the quad curve depends on the velocity
+        // of the pan recognizer, the path will "deform" more for a larger
+        // velocity.
+        // We don't need to do anything to animate the path back to its
+        // non-deformed state since the pan gesture recognizer's target method
+        // (panRecognizerDidChange(_:) in our case) is called periodically
+        // even when the user stops moving their finger (until the velocity
+        // reaches 0).
+        // Note: To increase the bouncy effect, decrease the `damping` value.
+        let damping: CGFloat = 45.0
+        let verticalOffset = panRecognizer.velocityInView(window).y / damping
+        maskingPath.addQuadCurveToPoint(CGPoint(x: window.bounds.maxX, y: 0.0), controlPoint: CGPoint(x: window.bounds.midX, y: verticalOffset))
+
+        // ...to bottom-right corner...
+        maskingPath.addLineToPoint(CGPoint(x: window.bounds.maxX, y: window.bounds.maxY))
+
+        // ...to bottom-left corner...
+        maskingPath.addLineToPoint(CGPoint(x: 0.0, y: window.bounds.maxY))
+
+        // ...and close the path.
+        maskingPath.closePath()
+
+        snapshotMaskLayer?.path = maskingPath.CGPath
     }
 
     private func endInteractiveStyleTransition(withPanRecognizer panRecognizer: UIPanGestureRecognizer) {
@@ -195,51 +245,42 @@ class ArchiveViewController: UITableViewController, UIGestureRecognizerDelegate 
     }
 
     private func cancelInteractiveStyleTransition(withVelocity velocity: CGPoint) {
-        guard let snapshotMaskView = snapshotMaskView else {
+        guard let snapshotMaskLayer = snapshotMaskLayer else {
             return
         }
 
-        let duration = timeRequiredToMove(from: snapshotMaskView.frame.minY, to: 0.0, withVelocity: velocity.y)
-        let clampedDuration = min(duration, 3.0)
-
-        // When cancelling the transition we simply move the mask view to it's original
+        // When cancelling the transition we simply move the mask layer to it's original
         // location (which means that the entire previous style snapshot is shown), then
         // reset the style to the previous style and remove the snapshot.
-        UIView.animateWithDuration(clampedDuration, animations: {
-            snapshotMaskView.frame.origin.y = 0.0
-        }, completion: { _ in
+        animate(snapshotMaskLayer, to: .zero, withVelocity: velocity) {
             self.useDarkMode = !self.useDarkMode
             self.cleanupAfterInteractiveStyleTransition()
-        })
+        }
     }
 
     private func completeInteractiveStyleTransition(withVelocity velocity: CGPoint) {
         guard let
             window = tableView.window,
-            snapshotMaskView = snapshotMaskView else {
+            snapshotMaskLayer = snapshotMaskLayer else {
                 return
         }
 
-        let targetLocation = window.bounds.maxY
-        let duration = timeRequiredToMove(from: snapshotMaskView.frame.minY, to: targetLocation, withVelocity: velocity.y)
-        let clampedDuration = min(duration, 3.0)
 
-        // When completing the transition we slide the mask view down to the bottom of
-        // the window and then remove the snapshot. The further down the mask view is, 
-        // the more of the underlying view is visible. When the mask view reaches the
+        // When completing the transition we slide the mask layer down to the bottom of
+        // the window and then remove the snapshot. The further down the mask layer is,
+        // the more of the underlying view is visible. When the mask layer reaches the
         // bottom of the window, the entire underlying view will be visible so removing
         // the snapshot will have no visual effect.
-        UIView.animateWithDuration(clampedDuration, animations: {
-            snapshotMaskView.frame.origin.y = targetLocation
-        }, completion: { _ in
+        let targetLocation = CGPoint(x: 0.0, y: window.bounds.maxY)
+        animate(snapshotMaskLayer, to: targetLocation, withVelocity: velocity) {
             self.cleanupAfterInteractiveStyleTransition()
-        })
+        }
     }
 
     private func cleanupAfterInteractiveStyleTransition() {
         self.previousStyleViewSnapshot?.removeFromSuperview()
         self.previousStyleViewSnapshot = nil
-        self.snapshotMaskView = nil
+        self.snapshotMaskLayer = nil
     }
 
     // MARK: - Applying styles
@@ -275,12 +316,30 @@ class ArchiveViewController: UITableViewController, UIGestureRecognizerDelegate 
         }
     }
 
-    // MARK: - Utilities
+    // MARK: - Animation utilities
 
-    private func timeRequiredToMove(from from: CGFloat, to: CGFloat, withVelocity velocity: CGFloat) -> NSTimeInterval {
-        let distanceToMove = to - from
-        let requiredTime = NSTimeInterval(abs(distanceToMove / velocity))
+    private func timeRequiredToMove(from from: CGPoint, to: CGPoint, withVelocity velocity: CGPoint) -> NSTimeInterval {
+        let distanceToMove = sqrt(pow(to.x - from.x, 2) + pow(to.y - from.y, 2))
+        let velocityMagnitude = sqrt(pow(velocity.x, 2) + pow(velocity.y, 2))
+        let requiredTime = NSTimeInterval(abs(distanceToMove / velocityMagnitude))
         return requiredTime
+    }
+
+    private func animate(layer: CALayer, to targetPoint: CGPoint, withVelocity velocity: CGPoint, completion: () -> Void) {
+        let startPoint = layer.position
+        layer.position = targetPoint
+
+        let positionAnimation = CABasicAnimation(keyPath: "position")
+        positionAnimation.duration = min(3.0, timeRequiredToMove(from: startPoint, to: targetPoint, withVelocity: velocity))
+        positionAnimation.fromValue = NSValue(CGPoint: startPoint)
+        positionAnimation.toValue = NSValue(CGPoint: targetPoint)
+
+        CATransaction.begin()
+        CATransaction.setCompletionBlock(completion)
+
+        layer.addAnimation(positionAnimation, forKey: "position")
+
+        CATransaction.commit()
     }
 
 }
