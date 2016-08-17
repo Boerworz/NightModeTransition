@@ -36,8 +36,8 @@ user stops dragging (but keeps their fingers on the screen) as long as the
 calculated velocity hasn't settled, we don't need to add any special code 
 to return the mask to its non-curved state.
 
-A more detailed write-up will hopefully be posted on 
-[my blog](http://ndersson.me) shortly.
+A more detailed write-up has been posted on 
+[my blog](http://ndersson.me/post/recreating_the_castro_2_night_mode_transition/).
 
 ### Podcasts in the demo application
 * [If I Were You](http://ifiwereyoushow.com)
