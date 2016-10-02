@@ -259,10 +259,8 @@ class ArchiveViewController: UITableViewController, UIGestureRecognizerDelegate 
     }
 
     fileprivate func completeInteractiveStyleTransition(withVelocity velocity: CGPoint) {
-        guard let
-            window = tableView.window,
-            let snapshotMaskLayer = snapshotMaskLayer else {
-                return
+        guard let window = tableView.window, let snapshotMaskLayer = snapshotMaskLayer else {
+            return
         }
 
 
