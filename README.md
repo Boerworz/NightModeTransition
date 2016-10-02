@@ -17,6 +17,10 @@ a device.
 ![The style transition in action](transition.gif)
 
 ### How the transition works
+
+_Note: A more detailed write-up has been posted on 
+[my blog](http://ndersson.me/post/recreating_the_castro_2_night_mode_transition/)._
+
 The transition is implemented using a snapshot view and a mask layer. When the
 transition begins, a snapshot of the current view is taken and placed on top of
 all other content. A mask layer for the snapshot view is also created at this
@@ -40,9 +44,6 @@ the pan gesture recognizer calls its target selector periodically even when the
 user stops dragging (but keeps their fingers on the screen) as long as the
 calculated velocity hasn't settled, we don't need to add any special code 
 to return the mask to its non-curved state.
-
-A more detailed write-up has been posted on 
-[my blog](http://ndersson.me/post/recreating_the_castro_2_night_mode_transition/).
 
 ### Podcasts in the demo application
 * [If I Were You](http://ifiwereyoushow.com)
