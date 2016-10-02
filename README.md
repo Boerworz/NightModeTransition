@@ -5,7 +5,7 @@ a glimpse of the transition near the end of
 [the trailer](http://supertop.co/castro/#trailer).
 
 ### Running the application
-Simply open `NightModeTransition.xcodeproj` in Xcode and Build & Run the 
+Simply open `NightModeTransition.xcodeproj` in Xcode 8 and Build & Run the 
 application.  Swipe downwards with two fingers when running the application to 
 transition between the two available styles.
 
