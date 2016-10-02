@@ -14,14 +14,14 @@ struct ViewControllerStyle {
     var tableViewStyle: TableViewStyle
 
     static let Dark = ViewControllerStyle(
-        navigationBarStyle: .Black,
-        statusBarStyle: .LightContent,
+        navigationBarStyle: .black,
+        statusBarStyle: .lightContent,
         tableViewStyle: .Dark
     )
 
     static let Light = ViewControllerStyle(
-        navigationBarStyle: .Default,
-        statusBarStyle: .Default,
+        navigationBarStyle: .default,
+        statusBarStyle: .default,
         tableViewStyle: .Light
     )
 
@@ -39,7 +39,7 @@ struct TableViewStyle {
     )
 
     static let Light = TableViewStyle(
-        backgroundColor: .groupTableViewBackgroundColor(),
+        backgroundColor: .groupTableViewBackground,
         separatorColor: UIColor(white: 0.81, alpha: 1.0),
         cellStyle: .Light
     )
@@ -58,7 +58,7 @@ class ArchiveViewController: UITableViewController, UIGestureRecognizerDelegate 
 
     // MARK: - UITableViewDelegate methods
 
-    override func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         guard let archiveCell = cell as? ArchiveTableCellView else {
             return
         }
@@ -68,7 +68,7 @@ class ArchiveViewController: UITableViewController, UIGestureRecognizerDelegate 
 
     // MARK: - Gesture recognizer interaction
 
-    private func setupPanGestureRecognizer() {
+    fileprivate func setupPanGestureRecognizer() {
         let panRecognizer = UIPanGestureRecognizer(target: self, action: #selector(panRecognizerDidChange(_:)))
         panRecognizer.maximumNumberOfTouches = 2
         panRecognizer.minimumNumberOfTouches = 2
@@ -76,26 +76,26 @@ class ArchiveViewController: UITableViewController, UIGestureRecognizerDelegate 
         tableView.addGestureRecognizer(panRecognizer)
     }
 
-    func panRecognizerDidChange(panRecognizer: UIPanGestureRecognizer) {
+    func panRecognizerDidChange(_ panRecognizer: UIPanGestureRecognizer) {
         switch panRecognizer.state {
-        case .Began:
+        case .began:
             beginInteractiveStyleTransition(withPanRecognizer: panRecognizer)
-        case .Changed:
+        case .changed:
             adjustMaskLayer(basedOn: panRecognizer)
-        case .Ended, .Failed:
+        case .ended, .failed:
             endInteractiveStyleTransition(withPanRecognizer: panRecognizer)
         default: break
         }
     }
 
-    func gestureRecognizerShouldBegin(gestureRecognizer: UIGestureRecognizer) -> Bool {
+    func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
         guard let panRecognizer = gestureRecognizer as? UIPanGestureRecognizer else {
             return true
         }
 
         // A pan gesture recognizer recognizes pans in all directions, but we only
         // want the recognizer to begin if the user pans downwards.
-        let translation = panRecognizer.translationInView(tableView.window)
+        let translation = panRecognizer.translation(in: tableView.window)
         let isMovingDownwards = translation.y > 0.0
         return isMovingDownwards
     }
@@ -108,31 +108,31 @@ class ArchiveViewController: UITableViewController, UIGestureRecognizerDelegate 
     /// As the transition progresses, less and less of the snapshot view
     /// will be visible, revealing more of the real view which is styled
     /// with the new style.
-    private var previousStyleViewSnapshot: UIView?
+    fileprivate var previousStyleViewSnapshot: UIView?
 
     /// During the interactive transition, this property contains the layer
     /// used to mask the contents of `previousStyleViewSnapshot`.
     /// When the user pans, the position and path of `snapshotMaskLayer` is
     /// adjusted to reflect the current translation of the pan recognizer.
-    private var snapshotMaskLayer: CAShapeLayer?
+    fileprivate var snapshotMaskLayer: CAShapeLayer?
 
-    private func beginInteractiveStyleTransition(withPanRecognizer panRecognizer: UIPanGestureRecognizer) {
+    fileprivate func beginInteractiveStyleTransition(withPanRecognizer panRecognizer: UIPanGestureRecognizer) {
         guard let window = tableView.window else {
             return
         }
 
         // We snapshot the window before applying the new style, and make sure
         // it's positioned on top of all the other content.
-        previousStyleViewSnapshot = window.snapshotViewAfterScreenUpdates(false)
+        previousStyleViewSnapshot = window.snapshotView(afterScreenUpdates: false)
         window.addSubview(previousStyleViewSnapshot!)
-        window.bringSubviewToFront(previousStyleViewSnapshot!)
+        window.bringSubview(toFront: previousStyleViewSnapshot!)
 
         // When we have the snapshot we create a new mask layer that's used to
         // control how much of the previous view we display as the transition
         // progresses.
         snapshotMaskLayer = CAShapeLayer()
-        snapshotMaskLayer?.path = UIBezierPath(rect: window.bounds).CGPath
-        snapshotMaskLayer?.fillColor = UIColor.blackColor().CGColor
+        snapshotMaskLayer?.path = UIBezierPath(rect: window.bounds).cgPath
+        snapshotMaskLayer?.fillColor = UIColor.black.cgColor
         previousStyleViewSnapshot?.layer.mask = snapshotMaskLayer
 
         // Now we're free to apply the new style. This won't be visible until
@@ -145,12 +145,12 @@ class ArchiveViewController: UITableViewController, UIGestureRecognizerDelegate 
         adjustMaskLayer(basedOn: panRecognizer)
     }
 
-    private func adjustMaskLayer(basedOn panRecognizer: UIPanGestureRecognizer) {
+    fileprivate func adjustMaskLayer(basedOn panRecognizer: UIPanGestureRecognizer) {
         adjustMaskLayerPosition(basedOn: panRecognizer)
         adjustMaskLayerPath(basedOn: panRecognizer)
     }
 
-    private func adjustMaskLayerPosition(basedOn panRecognizer: UIPanGestureRecognizer) {
+    fileprivate func adjustMaskLayerPosition(basedOn panRecognizer: UIPanGestureRecognizer) {
         guard let window = tableView.window else {
             return
         }
@@ -160,7 +160,7 @@ class ArchiveViewController: UITableViewController, UIGestureRecognizerDelegate 
         CATransaction.begin()
         CATransaction.setDisableActions(true)
 
-        let verticalTranslation = panRecognizer.translationInView(window).y
+        let verticalTranslation = panRecognizer.translation(in: window).y
         if verticalTranslation < 0.0 {
             // We wan't to prevent the user from moving the mask layer out the
             // top of the window, since doing so would show the new style at
@@ -168,7 +168,7 @@ class ArchiveViewController: UITableViewController, UIGestureRecognizerDelegate 
             // By resetting the translation we make sure there's no visual 
             // delay between when the user tries to pan upwards and when they 
             // start panning downwards again.
-            panRecognizer.setTranslation(.zero, inView: window)
+            panRecognizer.setTranslation(.zero, in: window)
             snapshotMaskLayer?.frame.origin.y = 0.0
         } else {
             // Simply move the mask layer as much as the user has panned.
@@ -183,7 +183,7 @@ class ArchiveViewController: UITableViewController, UIGestureRecognizerDelegate 
         CATransaction.commit()
     }
 
-    private func adjustMaskLayerPath(basedOn panRecognizer: UIPanGestureRecognizer) {
+    fileprivate func adjustMaskLayerPath(basedOn panRecognizer: UIPanGestureRecognizer) {
         guard let window = tableView.window else {
             return
         }
@@ -191,7 +191,7 @@ class ArchiveViewController: UITableViewController, UIGestureRecognizerDelegate 
         let maskingPath = UIBezierPath()
 
         // Top-left corner...
-        maskingPath.moveToPoint(.zero)
+        maskingPath.move(to: .zero)
 
         // ...arc to top-right corner...
         // This is all the code that is required to get the bouncy effect.
@@ -205,28 +205,28 @@ class ArchiveViewController: UITableViewController, UIGestureRecognizerDelegate 
         // reaches 0).
         // Note: To increase the bouncy effect, decrease the `damping` value.
         let damping: CGFloat = 45.0
-        let verticalOffset = panRecognizer.velocityInView(window).y / damping
-        maskingPath.addQuadCurveToPoint(CGPoint(x: window.bounds.maxX, y: 0.0), controlPoint: CGPoint(x: window.bounds.midX, y: verticalOffset))
+        let verticalOffset = panRecognizer.velocity(in: window).y / damping
+        maskingPath.addQuadCurve(to: CGPoint(x: window.bounds.maxX, y: 0.0), controlPoint: CGPoint(x: window.bounds.midX, y: verticalOffset))
 
         // ...to bottom-right corner...
-        maskingPath.addLineToPoint(CGPoint(x: window.bounds.maxX, y: window.bounds.maxY))
+        maskingPath.addLine(to: CGPoint(x: window.bounds.maxX, y: window.bounds.maxY))
 
         // ...to bottom-left corner...
-        maskingPath.addLineToPoint(CGPoint(x: 0.0, y: window.bounds.maxY))
+        maskingPath.addLine(to: CGPoint(x: 0.0, y: window.bounds.maxY))
 
         // ...and close the path.
-        maskingPath.closePath()
+        maskingPath.close()
 
-        snapshotMaskLayer?.path = maskingPath.CGPath
+        snapshotMaskLayer?.path = maskingPath.cgPath
     }
 
-    private func endInteractiveStyleTransition(withPanRecognizer panRecognizer: UIPanGestureRecognizer) {
+    fileprivate func endInteractiveStyleTransition(withPanRecognizer panRecognizer: UIPanGestureRecognizer) {
         guard let window = tableView.window else {
             return
         }
 
-        let velocity = panRecognizer.velocityInView(window)
-        let translation = panRecognizer.translationInView(window)
+        let velocity = panRecognizer.velocity(in: window)
+        let translation = panRecognizer.translation(in: window)
 
         let isMovingDownwards = velocity.y > 0.0
         let hasPassedThreshold = translation.y > window.bounds.midY
@@ -244,7 +244,7 @@ class ArchiveViewController: UITableViewController, UIGestureRecognizerDelegate 
         }
     }
 
-    private func cancelInteractiveStyleTransition(withVelocity velocity: CGPoint) {
+    fileprivate func cancelInteractiveStyleTransition(withVelocity velocity: CGPoint) {
         guard let snapshotMaskLayer = snapshotMaskLayer else {
             return
         }
@@ -258,10 +258,10 @@ class ArchiveViewController: UITableViewController, UIGestureRecognizerDelegate 
         }
     }
 
-    private func completeInteractiveStyleTransition(withVelocity velocity: CGPoint) {
+    fileprivate func completeInteractiveStyleTransition(withVelocity velocity: CGPoint) {
         guard let
             window = tableView.window,
-            snapshotMaskLayer = snapshotMaskLayer else {
+            let snapshotMaskLayer = snapshotMaskLayer else {
                 return
         }
 
@@ -277,7 +277,7 @@ class ArchiveViewController: UITableViewController, UIGestureRecognizerDelegate 
         }
     }
 
-    private func cleanupAfterInteractiveStyleTransition() {
+    fileprivate func cleanupAfterInteractiveStyleTransition() {
         self.previousStyleViewSnapshot?.removeFromSuperview()
         self.previousStyleViewSnapshot = nil
         self.snapshotMaskLayer = nil
@@ -285,28 +285,28 @@ class ArchiveViewController: UITableViewController, UIGestureRecognizerDelegate 
 
     // MARK: - Applying styles
 
-    private var currentStyle = ViewControllerStyle.Light {
+    fileprivate var currentStyle = ViewControllerStyle.Light {
         didSet { applyCurrentStyle() }
     }
 
-    private var useDarkMode = false {
+    fileprivate var useDarkMode = false {
         didSet { currentStyle = useDarkMode ? .Dark : .Light }
     }
 
-    private func applyCurrentStyle() {
+    fileprivate func applyCurrentStyle() {
         apply(style: currentStyle)
     }
 
-    private func apply(style style: ViewControllerStyle) {
+    fileprivate func apply(style: ViewControllerStyle) {
         navigationController?.navigationBar.barStyle = style.navigationBarStyle
-        UIApplication.sharedApplication().statusBarStyle = style.statusBarStyle
+        UIApplication.shared.statusBarStyle = style.statusBarStyle
 
         tableView.backgroundColor = style.tableViewStyle.backgroundColor
         tableView.separatorColor = style.tableViewStyle.separatorColor
         apply(cellStyle: style.tableViewStyle.cellStyle, toCells: tableView.visibleCells)
     }
 
-    private func apply(cellStyle cellStyle: CellStyle, toCells cells: [UITableViewCell]) {
+    fileprivate func apply(cellStyle: CellStyle, toCells cells: [UITableViewCell]) {
         for cell in cells {
             guard let archiveCell = cell as? ArchiveTableCellView else {
                 continue
@@ -318,26 +318,26 @@ class ArchiveViewController: UITableViewController, UIGestureRecognizerDelegate 
 
     // MARK: - Animation utilities
 
-    private func timeRequiredToMove(from from: CGPoint, to: CGPoint, withVelocity velocity: CGPoint) -> NSTimeInterval {
+    fileprivate func timeRequiredToMove(from: CGPoint, to: CGPoint, withVelocity velocity: CGPoint) -> TimeInterval {
         let distanceToMove = sqrt(pow(to.x - from.x, 2) + pow(to.y - from.y, 2))
         let velocityMagnitude = sqrt(pow(velocity.x, 2) + pow(velocity.y, 2))
-        let requiredTime = NSTimeInterval(abs(distanceToMove / velocityMagnitude))
+        let requiredTime = TimeInterval(abs(distanceToMove / velocityMagnitude))
         return requiredTime
     }
 
-    private func animate(layer: CALayer, to targetPoint: CGPoint, withVelocity velocity: CGPoint, completion: () -> Void) {
+    fileprivate func animate(_ layer: CALayer, to targetPoint: CGPoint, withVelocity velocity: CGPoint, completion: @escaping () -> Void) {
         let startPoint = layer.position
         layer.position = targetPoint
 
         let positionAnimation = CABasicAnimation(keyPath: "position")
         positionAnimation.duration = min(3.0, timeRequiredToMove(from: startPoint, to: targetPoint, withVelocity: velocity))
-        positionAnimation.fromValue = NSValue(CGPoint: startPoint)
-        positionAnimation.toValue = NSValue(CGPoint: targetPoint)
+        positionAnimation.fromValue = NSValue(cgPoint: startPoint)
+        positionAnimation.toValue = NSValue(cgPoint: targetPoint)
 
         CATransaction.begin()
         CATransaction.setCompletionBlock(completion)
 
-        layer.addAnimation(positionAnimation, forKey: "position")
+        layer.add(positionAnimation, forKey: "position")
 
         CATransaction.commit()
     }
