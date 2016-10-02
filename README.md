@@ -9,6 +9,11 @@ Simply open `NightModeTransition.xcodeproj` in Xcode 8 and Build & Run the
 application.  Swipe downwards with two fingers when running the application to 
 transition between the two available styles.
 
+**NOTE:** The application currently doesn't work as expected in the iPhone 7
+simulator due to [an issue](https://forums.developer.apple.com/thread/63438)
+with snapshot views. Please run the application in any other simulator, or on
+a device.
+
 ![The style transition in action](transition.gif)
 
 ### How the transition works
