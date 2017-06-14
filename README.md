@@ -1,8 +1,12 @@
+**UPDATE**: I've released a library called [Gagat](https://github.com/Boerworz/Gagat) that makes it super simple to add the transition showcased in this repository to your own iOS apps. You should check it out!
+
 # NightModeTransition
 This repository contains an implementation of a transition heavily inspired by 
 the Night Mode transition in [Castro 2](http://supertop.co/castro/). You can see 
 a glimpse of the transition near the end of 
 [the trailer](http://supertop.co/castro/#trailer).
+
+_Note: If you want to use the transition in your own application, head on over to the [Gagat](https://github.com/Boerworz/Gagat) repository. If you want to understand how the transition is implemented, keep on reading!_
 
 ### Running the application
 Simply open `NightModeTransition.xcodeproj` in Xcode 8 and Build & Run the 
